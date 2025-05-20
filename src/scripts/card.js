@@ -26,7 +26,7 @@ function createCard(cardData, likeCard, openImagePopUp) {
   });
 
   deleteButton.addEventListener("click", function () {
-    cardElement.remove();
+    deleteCard(cardElement);
   });
 
   cardImage.addEventListener("click", function () {

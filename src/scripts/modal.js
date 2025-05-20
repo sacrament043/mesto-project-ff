@@ -1,31 +1,32 @@
-export { openPopup, closePopUp, escapeKey, overlayClick };
+export { openModal, closeModal, setOverlayListeners };
 
-//открытие поп апа
-function openPopup(popup) {
+function openModal(popup) {
   popup.classList.add("popup_is-opened");
+  document.addEventListener("keydown", handleEscapeKey);
 }
 
-//закрытие поп апа
-function closePopUp(popup) {
+function closeModal(popup) {
   popup.classList.remove("popup_is-opened");
+  document.removeEventListener("keydown", handleEscapeKey);
 }
 
-function escapeKey() {
-document.addEventListener("keydown", (evt) => {
+function handleEscapeKey(evt) {
   if (evt.key === "Escape") {
     const openedPopup = document.querySelector(".popup_is-opened");
     if (openedPopup) {
-      closePopUp(openedPopup);
+      closeModal(openedPopup);
     }
   }
-})};
+}
 
-function overlayClick() {
-const allPopUps = document.querySelectorAll(".popup");
-allPopUps.forEach((popup) => {
-  popup.addEventListener("click", (evt) => {
-    if (evt.target === popup) {
-      closePopUp(popup);
-    }
+// Навешиваем слушатель клика по оверлею один раз при инициализации
+function setOverlayListeners() {
+  const allPopups = document.querySelectorAll(".popup");
+  allPopups.forEach((popup) => {
+    popup.addEventListener("click", (evt) => {
+      if (evt.target === popup) {
+        closeModal(popup);
+      }
+    });
   });
-})};
+}
